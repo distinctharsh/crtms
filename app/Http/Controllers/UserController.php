@@ -78,7 +78,7 @@ class UserController extends Controller
                 'string',
                 'min:6',
                 'confirmed',
-                'regex:/^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};:|,.<>\\/?]).+$/'
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/'
             ],
             'role_id'      => 'required|exists:roles,id',
             'vertical_id'  => 'nullable|exists:verticals,id',

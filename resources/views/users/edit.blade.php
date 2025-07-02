@@ -39,7 +39,10 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Password (leave blank to keep current)</label>
                         <input type="password" class="form-control @error('password') is-invalid @enderror"
-                               id="password" name="password">
+                               id="password" name="password"
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$"
+                               title="Password must be at least 6 characters, contain one uppercase letter, one lowercase letter, one digit, and one special character (!@#$%^&*).">
+                        <small class="form-text text-muted">Password must be at least 6 characters, contain one uppercase letter, one lowercase letter, one digit, and one special character (!@#$%^&*).</small>
                         @error('password')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

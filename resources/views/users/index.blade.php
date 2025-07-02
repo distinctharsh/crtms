@@ -114,8 +114,8 @@
           </div>
           <div class="mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required pattern="^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};:|,.<>/?]).{6,}$" title="Password must be at least 6 characters, contain one uppercase letter and one special character.">
-            <small class="form-text text-muted">Password must be at least 6 characters, contain one uppercase letter and one special character.</small>
+            <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" required pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$" title="Password must be at least 6 characters, contain one uppercase letter, one lowercase letter, one digit, and one special character (!@#$%^&*).">
+            <small class="form-text text-muted">Password must be at least 6 characters, contain one uppercase letter, one lowercase letter, one digit, and one special character (!@#$%^&*).</small>
             @error('password')
             <div class="invalid-feedback">{{ $message }}</div>
             @enderror
@@ -190,9 +190,9 @@ $(document).ready(function() {
     // Password validation for Create User Modal
     $('#createUserForm').on('submit', function(e) {
         var password = $('#password').val();
-        var pattern = /^(?=.*[A-Z])(?=.*[!@#$%^&*()_+\-=[\]{};:|,.<>/?]).{6,}$/;
+        var pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/;
         if (!pattern.test(password)) {
-            alert('Password must be at least 6 characters, contain one uppercase letter and one special character.');
+            alert('Password must be at least 6 characters, contain one uppercase letter, one lowercase letter, one digit, and one special character (!@#$%^&*).');
             $('#password').focus();
             e.preventDefault();
             return false;
