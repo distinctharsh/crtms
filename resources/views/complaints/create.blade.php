@@ -181,6 +181,32 @@
                             }
                         });
                     }
+                    // Hide vertical option with id=2 if network_type_id is 1
+                    function updateVerticalOptions() {
+                        var networkType = document.getElementById('network_type_id');
+                        var verticalSelect = document.getElementById('vertical_id');
+                        if (!networkType || !verticalSelect) return;
+                        var hideId = '2';
+                        for (var i = 0; i < verticalSelect.options.length; i++) {
+                            var opt = verticalSelect.options[i];
+                            if (opt.value === hideId) {
+                                if (networkType.value === '1') {
+                                    opt.style.display = 'none';
+                                    // If currently selected, reset
+                                    if (verticalSelect.value === hideId) {
+                                        verticalSelect.value = '';
+                                    }
+                                } else {
+                                    opt.style.display = '';
+                                }
+                            }
+                        }
+                    }
+                    var networkType = document.getElementById('network_type_id');
+                    if (networkType) {
+                        networkType.addEventListener('change', updateVerticalOptions);
+                        updateVerticalOptions(); // On page load
+                    }
                 });
                 </script>
             </div>
