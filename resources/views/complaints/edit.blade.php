@@ -24,16 +24,50 @@
                     @csrf
                     @method('PUT')
 
-                    <!-- Row 1: Network Type and Priority -->
+                    <!-- Row 1: User Name and Intercom -->
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="network_type_id" class="form-label">Network Type *</label>
-                            <select class="form-select @error('network_type_id') is-invalid @enderror"
+                            <label for="user_name" class="form-label">Name <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control @error('user_name') is-invalid @enderror"
+                                id="user_name" name="user_name" value="{{ old('user_name', $complaint->user_name) }}" required maxlength="30">
+                            @error('user_name')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label for="intercom" class="form-label">Intercom / Telephone No. <span class="text-danger">*</span></label>
+                            <input type="number" class="form-control @error('intercom') is-invalid @enderror"
+                                id="intercom" name="intercom" value="{{ old('intercom', $complaint->intercom) }}" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10)" required maxlength="10">
+                            @error('intercom')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Section and Issue Type -->
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <label for="section_id" class="form-label">Section <span class="text-danger">*</span></label>
+                            <select class="form-select tom-select @error('section_id') is-invalid @enderror"
+                                id="section_id" name="section_id" required>
+                                <option value="">Select --</option>
+                                @foreach($sections as $section)
+                                <option value="{{ $section->id }}" {{ old('section_id', $complaint->section_id) == $section->id ? 'selected' : '' }}>
+                                    {{ $section->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('section_id')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="col-md-6">
+                            <label for="network_type_id" class="form-label">Issue Type <span class="text-danger">*</span></label>
+                            <select class="form-select tom-select @error('network_type_id') is-invalid @enderror"
                                 id="network_type_id" name="network_type_id" required>
                                 <option value="">Select --</option>
                                 @foreach($networkTypes as $type)
-                                <option value="{{ $type->id }}"
-                                    {{ old('network_type_id', $complaint->network_type_id) == $type->id ? 'selected' : '' }}>
+                                <option value="{{ $type->id }}" {{ old('network_type_id', $complaint->network_type_id) == $type->id ? 'selected' : '' }}>
                                     {{ $type->name }}
                                 </option>
                                 @endforeach
@@ -42,40 +76,17 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="col-md-6">
-                            <label for="priority" class="form-label">Priority *</label>
-                            <select class="form-select @error('priority') is-invalid @enderror"
-                                id="priority" name="priority" required>
-                                <option value="low" {{ old('priority', $complaint->priority) == 'low' ? 'selected' : '' }}>Low</option>
-                                <option value="medium" {{ old('priority', $complaint->priority) == 'medium' ? 'selected' : '' }}>Medium</option>
-                                <option value="high" {{ old('priority', $complaint->priority) == 'high' ? 'selected' : '' }}>High</option>
-                            </select>
-                            @error('priority')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
                     </div>
 
-                    <!-- Description (Full Width) -->
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Ticket Description *</label>
-                        <textarea class="form-control @error('description') is-invalid @enderror"
-                            id="description" name="description" rows="3" required>{{ old('description', $complaint->description) }}</textarea>
-                        @error('description')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
-
-                    <!-- Row 2: Vertical and Section -->
+                    <!-- Row 3: Vertical and Priority (radio) -->
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="vertical_id" class="form-label">Vertical *</label>
-                            <select class="form-select @error('vertical_id') is-invalid @enderror"
+                            <label for="vertical_id" class="form-label">Vertical <span class="text-danger">*</span></label>
+                            <select class="form-select tom-select @error('vertical_id') is-invalid @enderror"
                                 id="vertical_id" name="vertical_id" required>
                                 <option value="">Select --</option>
                                 @foreach($verticals as $vertical)
-                                <option value="{{ $vertical->id }}"
-                                    {{ old('vertical_id', $complaint->vertical_id) == $vertical->id ? 'selected' : '' }}>
+                                <option value="{{ $vertical->id }}" {{ old('vertical_id', $complaint->vertical_id) == $vertical->id ? 'selected' : '' }}>
                                     {{ $vertical->name }}
                                 </option>
                                 @endforeach
@@ -85,48 +96,42 @@
                             @enderror
                         </div>
                         <div class="col-md-6">
-                            <label for="section_id" class="form-label">Section *</label>
-                            <select class="form-select @error('section_id') is-invalid @enderror"
-                                id="section_id" name="section_id" required>
-                                <option value="">Select --</option>
-                                @foreach($sections as $section)
-                                <option value="{{ $section->id }}"
-                                    {{ old('section_id', $complaint->section_id) == $section->id ? 'selected' : '' }}>
-                                    {{ $section->name }}
-                                </option>
-                                @endforeach
-                            </select>
-                            @error('section_id')
-                            <div class="invalid-feedback">{{ $message }}</div>
+                            <label class="form-label">Priority <span class="text-danger">*</span></label>
+                            <div class="d-flex gap-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="priority" id="high" value="high" {{ old('priority', $complaint->priority) == 'high' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="high">High</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="priority" id="medium" value="medium" {{ old('priority', $complaint->priority) == 'medium' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="medium">Medium</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="priority" id="low" value="low" {{ old('priority', $complaint->priority) == 'low' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="low">Low</label>
+                                </div>
+                            </div>
+                            @error('priority')
+                            <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
 
-                    <!-- Row 3: User Name and Intercom -->
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <label for="user_name" class="form-label">User Name *</label>
-                            <input type="text" class="form-control @error('user_name') is-invalid @enderror"
-                                id="user_name" name="user_name" value="{{ old('user_name', $complaint->user_name) }}" required>
-                            @error('user_name')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                        <div class="col-md-6">
-                            <label for="intercom" class="form-label">Intercom *</label>
-                            <input type="text" class="form-control @error('intercom') is-invalid @enderror"
-                                id="intercom" name="intercom" value="{{ old('intercom', $complaint->intercom) }}" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 3)" required>
-                            @error('intercom')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
+                    <!-- Description (Full Width) -->
+                    <div class="mb-3">
+                        <label for="description" class="form-label">Ticket Description <span class="text-danger">*</span></label>
+                        <textarea class="form-control @error('description') is-invalid @enderror" placeholder="Enter the Issue.. "
+                            id="description" name="description" rows="3" required>{{ old('description', $complaint->description) }}</textarea>
+                        @error('description')
+                        <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- File Upload (Full Width) -->
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="file" class="form-label">File Upload</label>
                         <input type="file" class="form-control @error('file') is-invalid @enderror"
-                            id="file" name="file">
+                            id="file" name="file" accept=".pdf,image/*">
                         @error('file')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -136,9 +141,6 @@
                             <a href="{{ Storage::url($complaint->file_path) }}" target="_blank">
                                 {{ basename($complaint->file_path) }}
                             </a>
-                            <!-- <button type="button" class="btn btn-sm btn-danger ms-2" onclick="document.getElementById('delete_file').value = '1'">
-                                Remove File
-                            </button> -->
                             <input type="hidden" name="delete_file" id="delete_file" value="0">
                         </div>
                         @endif
@@ -147,7 +149,7 @@
                     <!-- Status (Full Width) -->
                     <div class="mb-3">
                         <label for="status_id" class="form-label">Status *</label>
-                        <select class="form-select @error('status_id') is-invalid @enderror"
+                        <select class="form-select tom-select @error('status_id') is-invalid @enderror"
                             id="status_id" name="status_id" required>
                             @foreach($statuses as $status)
                                 <option value="{{ $status->id }}" {{ old('status_id', $complaint->status_id) == $status->id ? 'selected' : '' }}>
