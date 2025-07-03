@@ -327,7 +327,39 @@ $breadcrumbs = [
                 search: "",
                 searchPlaceholder: "Search complaints..."
             },
-            dom: 'lfrtip',
+            dom: '<"d-flex justify-content-between align-items-center mb-2"Bfl>rtip',
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: '<i class="bi bi-clipboard"></i>',
+                    className: 'btn btn-light btn-sm me-1',
+                    titleAttr: 'Copy'
+                },
+                {
+                    extend: 'csv',
+                    text: '<i class="bi bi-filetype-csv"></i>',
+                    className: 'btn btn-light btn-sm me-1',
+                    titleAttr: 'Export as CSV'
+                },
+                {
+                    extend: 'excel',
+                    text: '<i class="bi bi-file-earmark-excel"></i>',
+                    className: 'btn btn-light btn-sm me-1',
+                    titleAttr: 'Export as Excel'
+                },
+                {
+                    extend: 'pdf',
+                    text: '<i class="bi bi-file-earmark-pdf"></i>',
+                    className: 'btn btn-light btn-sm me-1',
+                    titleAttr: 'Export as PDF'
+                },
+                {
+                    extend: 'print',
+                    text: '<i class="bi bi-printer"></i>',
+                    className: 'btn btn-light btn-sm',
+                    titleAttr: 'Print'
+                }
+            ],
             columnDefs: [
                 { orderable: false, targets: 0 }
             ],

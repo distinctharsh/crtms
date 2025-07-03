@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/responsive/2.5.0/css/responsive.bootstrap5.min.css">
 
+    <link rel="stylesheet" href="{{ asset('css/buttons.bootstrap5.min.css') }}">
+
     <style>
         body {
             padding-top: 100px;
@@ -154,6 +156,13 @@
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/dataTables.responsive.min.js"></script>
     <script src="https://cdn.datatables.net/responsive/2.5.0/js/responsive.bootstrap5.min.js"></script>
     <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/jszip.min.js') }}"></script>
+    <script src="{{ asset('js/pdfmake.min.js') }}"></script>
+    <script src="{{ asset('js/vfs_fonts.js') }}"></script>
+    <script src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
+    <script src="{{ asset('js/buttons.bootstrap5.min.js') }}"></script>
+    <script src="{{ asset('js/buttons.html5.min.js') }}"></script>
+    <script src="{{ asset('js/buttons.print.min.js') }}"></script>
     @stack('scripts')
 </body>
 
