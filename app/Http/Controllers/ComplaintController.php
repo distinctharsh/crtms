@@ -132,22 +132,8 @@ class ComplaintController extends Controller
         })->get();
         $statuses = Status::active()->ordered()->where('name', '!=', 'assign_to_me')->get();
 
-
-        $perPage = $request->input('per_page', '10');
-
-        if ($perPage === 'all') {
-            $allItems = $query->latest()->get();
-            $complaints = new LengthAwarePaginator(
-                $allItems,
-                $allItems->count(),
-                $allItems->count(),
-                1,
-                ['path' => $request->url(), 'query' => $request->query()]
-            );
-        } else {
-            $complaints = $query->latest()->paginate((int) $perPage)->appends($request->query());
-        }
-        
+        // Remove perPage and server-side pagination
+        $complaints = $query->latest()->get();
 
         foreach ($complaints as $complaint) {
             $complaint->assignableUsers = $user->getAssignableUsers($complaint);
@@ -172,7 +158,7 @@ class ComplaintController extends Controller
         $verticals = Vertical::get();
         $networkTypes = NetworkType::get();
         $sections = Section::get();
-        return view('complaints.index', compact('complaints', 'usersList', 'managers', 'statuses', 'networkTypes', 'sections', 'verticals', 'perPage'));
+        return view('complaints.index', compact('complaints', 'usersList', 'managers', 'statuses', 'networkTypes', 'sections', 'verticals'));
     }
 
 
