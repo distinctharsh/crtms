@@ -69,7 +69,7 @@
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label class="form-label">Name</label>
-                                                    <input type="text" name="name" class="form-control" value="{{ $networkType->name }}" required>
+                                                    <input type="text" name="name" class="form-control tom-select" value="{{ $networkType->name }}" required>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -152,7 +152,7 @@
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label class="form-label">Name</label>
-                                                    <input type="text" name="name" class="form-control" value="{{ $section->name }}" required>
+                                                    <input type="text" name="name" class="form-control tom-select" value="{{ $section->name }}" required>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -242,7 +242,7 @@
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label class="form-label">Name</label>
-                                                    <input type="text" name="name" class="form-control" value="{{ $status->name }}" required>
+                                                    <input type="text" name="name" class="form-control tom-select" value="{{ $status->name }}" required>
                                                 </div>
                                                 <div class="mb-3">
                                                     <label class="form-label">Color</label>
@@ -329,7 +329,7 @@
                                             <div class="modal-body">
                                                 <div class="mb-3">
                                                     <label class="form-label">Name</label>
-                                                    <input type="text" name="name" class="form-control" value="{{ $vertical->name }}" required>
+                                                    <input type="text" name="name" class="form-control tom-select" value="{{ $vertical->name }}" required>
                                                 </div>
                                             </div>
                                             <div class="modal-footer">
@@ -389,7 +389,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" name="name" class="form-control" required>
+                            <input type="text" name="name" class="form-control tom-select" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -411,7 +411,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control tom-select" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -434,7 +434,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control tom-select" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -456,7 +456,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control tom-select" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -479,7 +479,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control tom-select" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Color</label>
@@ -505,7 +505,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control tom-select" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Color</label>
@@ -532,7 +532,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control tom-select" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -554,7 +554,7 @@
                     <div class="modal-body">
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control tom-select" required>
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -574,6 +574,18 @@
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         tooltipTriggerList.forEach(function (tooltipTriggerEl) {
             new bootstrap.Tooltip(tooltipTriggerEl);
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelectorAll('select.tom-select').forEach(function(el) {
+            new TomSelect(el, {
+                create: false,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
         });
     });
 </script>
