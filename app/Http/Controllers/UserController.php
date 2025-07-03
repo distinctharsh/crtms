@@ -17,7 +17,7 @@ class UserController extends Controller
         if (!auth()->user() || !auth()->user()->isManager()) {
             return redirect()->route('home')->with('error', 'Access denied.');
         }
-        $users = User::with('role')->get();
+        $users = User::withTrashed()->with('role', 'verticals')->get();
         $perPage = 'all';
         $roles = Role::whereNotIn('slug', ['admin', 'client'])->get();
         $verticals = Vertical::all();
@@ -101,5 +101,13 @@ class UserController extends Controller
         // Attach verticals
         $user->verticals()->sync($request->input('vertical_ids', []));
         return redirect()->route('users.index')->with('success', 'User created successfully!');
+    }
+
+    // Restore soft deleted user
+    public function restore($id)
+    {
+        $user = User::withTrashed()->findOrFail($id);
+        $user->restore();
+        return redirect()->route('users.index')->with('success', 'User restored successfully!');
     }
 }

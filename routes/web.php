@@ -72,6 +72,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/api/assignable-users', [ComplaintController::class, 'getAssignableUsers'])->name('api.assignable-users');
 
     Route::resource('users', UserController::class);
+    Route::post('/users/restore/{id}', [UserController::class, 'restore'])->name('users.restore');
 });
 
 Route::get('/api/complaints/lookup', [App\Http\Controllers\ComplaintController::class, 'lookup'])->name('api.complaints.lookup');

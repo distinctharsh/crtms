@@ -36,12 +36,13 @@
                             <th>Role</th>
                             <th>Verticals</th>
                             <th>Created At</th>
+                            <th>Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse($users as $user)
-                        <tr>
+                        <tr @if($user->deleted_at) style="background:#f8d7da;" @endif>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $user->full_name }}</td>
                             <td>{{ $user->username }}</td>
@@ -67,21 +68,35 @@
                             </td>
                             <td>{{ $user->created_at->format('M d, Y H:i') }}</td>
                             <td>
+                                @if($user->deleted_at)
+                                    <span class="badge bg-danger">Deleted</span>
+                                @else
+                                    <span class="badge bg-success">Active</span>
+                                @endif
+                            </td>
+                            <td>
                                 <div class="btn-group">
-                                    <a href="{{ route('users.edit', $user) }}" class="btn btn-primary btn-sm mr-5"><i class="fas fa-pen"></i></a>
-                                    @if($user->id !== auth()->user()->id && $user->role->slug !== 'manager')
-                                    <form action="{{ route('users.destroy', $user) }}" method="POST" class="d-inline" style="margin-left: 4px;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fas fa-trash"></i></button>
-                                    </form>
+                                    @if($user->deleted_at)
+                                        <form action="{{ route('users.restore', $user->id) }}" method="POST" style="display:inline;">
+                                            @csrf
+                                            <button class="btn btn-success btn-sm" type="submit" title="Restore"><i class="bi bi-arrow-counterclockwise"></i></button>
+                                        </form>
+                                    @else
+                                        <a href="{{ route('users.edit', $user) }}" class="btn btn-primary btn-sm mr-5"><i class="fas fa-pen"></i></a>
+                                        @if($user->id !== auth()->user()->id && $user->role->slug !== 'manager')
+                                        <form action="{{ route('users.destroy', $user) }}" method="POST" class="d-inline" style="margin-left: 4px;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this user?')"><i class="fas fa-trash"></i></button>
+                                        </form>
+                                        @endif
                                     @endif
                                 </div>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6" class="text-center">No users found</td>
+                            <td colspan="8" class="text-center">No users found</td>
                         </tr>
                         @endforelse
                     </tbody>
@@ -191,7 +206,42 @@
 <script src="{{ asset('js/dataTables.bootstrap5.min.js') }}"></script>
 <script>
 $(document).ready(function() {
-    $('#usersTable').DataTable();
+    $('#usersTable').DataTable({
+        responsive: true,
+        dom: '<"d-flex justify-content-between align-items-center mb-2"Bfl>rtip',
+        buttons: [
+            {
+                extend: 'copy',
+                text: '<i class="bi bi-clipboard"></i>',
+                className: 'btn btn-light btn-sm me-1',
+                titleAttr: 'Copy'
+            },
+            {
+                extend: 'csv',
+                text: '<i class="bi bi-filetype-csv"></i>',
+                className: 'btn btn-light btn-sm me-1',
+                titleAttr: 'Export as CSV'
+            },
+            {
+                extend: 'excel',
+                text: '<i class="bi bi-file-earmark-excel"></i>',
+                className: 'btn btn-light btn-sm me-1',
+                titleAttr: 'Export as Excel'
+            },
+            {
+                extend: 'pdf',
+                text: '<i class="bi bi-file-earmark-pdf"></i>',
+                className: 'btn btn-light btn-sm me-1',
+                titleAttr: 'Export as PDF'
+            },
+            {
+                extend: 'print',
+                text: '<i class="bi bi-printer"></i>',
+                className: 'btn btn-light btn-sm',
+                titleAttr: 'Print'
+            }
+        ]
+    });
 
     // Password validation for Create User Modal
     $('#createUserForm').on('submit', function(e) {
