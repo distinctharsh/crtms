@@ -49,7 +49,7 @@
                     <div class="row mb-3">
                     <div class="col-md-6">
                             <label for="section_id" class="form-label">Section <span class="text-danger">*</span></label>
-                            <select class="form-select @error('section_id') is-invalid @enderror"
+                            <select class="form-select tom-select @error('section_id') is-invalid @enderror"
                                 id="section_id" name="section_id" required>
                                 <option value="">Select --</option>
                                 @foreach($sections as $section)
@@ -64,7 +64,7 @@
                         </div>
                         <div class="col-md-6">
                             <label for="network_type_id" class="form-label">Issue Type <span class="text-danger">*</span></label>
-                            <select class="form-select @error('network_type_id') is-invalid @enderror"
+                            <select class="form-select tom-select @error('network_type_id') is-invalid @enderror"
                                 id="network_type_id" name="network_type_id" required>
                                 <option value="">Select --</option>
                                 @foreach($networkTypes as $type)
@@ -86,7 +86,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <label for="vertical_id" class="form-label">Vertical <span class="text-danger">*</span></label>
-                            <select class="form-select @error('vertical_id') is-invalid @enderror"
+                            <select class="form-select tom-select @error('vertical_id') is-invalid @enderror"
                                 id="vertical_id" name="vertical_id" required>
                                 <option value="">Select --</option>
                                 @foreach($verticals as $vertical)
@@ -207,6 +207,16 @@
                         networkType.addEventListener('change', updateVerticalOptions);
                         updateVerticalOptions(); // On page load
                     }
+                    // Tom Select initialization for all .tom-select dropdowns
+                    document.querySelectorAll('select.tom-select').forEach(function(el) {
+                        new TomSelect(el, {
+                            create: false,
+                            sortField: {
+                                field: 'text',
+                                direction: 'asc'
+                            }
+                        });
+                    });
                 });
                 </script>
             </div>

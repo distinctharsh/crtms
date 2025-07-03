@@ -41,7 +41,7 @@ $breadcrumbs = [
                                         <div class="row g-3 align-items-end">
                                             <div class="col-md-2">
                                                 <label class="form-label mb-1">Status</label>
-                                                <select name="status" class="form-select">
+                                                <select name="status" class="form-select tom-select">
                                                     <option value="">All Status</option>
                                                     @foreach($statuses as $status)
                                                     <option value="{{ $status->id }}" {{ collect(request('status'))->contains($status->id) ? 'selected' : '' }}>
@@ -52,7 +52,7 @@ $breadcrumbs = [
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label mb-1">Assigned To</label>
-                                                <select name="by" class="form-select">
+                                                <select name="by" class="form-select tom-select">
                                                     <option value="">Assigned To</option>
                                                     @foreach($usersList as $user)
                                                     <option value="{{ $user->id }}" {{ request('by') == $user->id ? 'selected' : '' }}>
@@ -63,7 +63,7 @@ $breadcrumbs = [
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label mb-1">Vertical</label>
-                                                <select name="vertical" class="form-select">
+                                                <select name="vertical" class="form-select tom-select">
                                                     <option value="">All Vertical</option>
                                                     @foreach($verticals as $vertical)
                                                     <option value="{{ $vertical->id }}" {{ request('vertical') == $vertical->id ? 'selected' : '' }}>
@@ -74,7 +74,7 @@ $breadcrumbs = [
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label mb-1">Network Type</label>
-                                                <select name="networktype" class="form-select">
+                                                <select name="networktype" class="form-select tom-select">
                                                     <option value="">All Issue Type</option>
                                                     @foreach($networkTypes as $networktype)
                                                     <option value="{{ $networktype->id }}" {{ request('networktype') == $networktype->id ? 'selected' : '' }}>
@@ -85,7 +85,7 @@ $breadcrumbs = [
                                             </div>
                                             <div class="col-md-2">
                                                 <label class="form-label mb-1">Section</label>
-                                                <select name="section" class="form-select">
+                                                <select name="section" class="form-select tom-select">
                                                     <option value="">All Section</option>
                                                     @foreach($sections as $section)
                                                     <option value="{{ $section->id }}" {{ request('section') == $section->id ? 'selected' : '' }}>
@@ -207,7 +207,7 @@ $breadcrumbs = [
                                                         <div class="modal-body">
                                                             <div class="mb-3">
                                                                 <label for="assigned_to" class="form-label">Assign To</label>
-                                                                <select class="form-select" name="assigned_to" required>
+                                                                <select class="form-select tom-select" name="assigned_to" required>
                                                                     <option value="">Select User</option>
                                                                     @foreach($complaint->assignableUsers as $user)
                                                                     <option value="{{ $user->id }}">{{ $user->full_name }} ({{ strtoupper($user->role->name) }})</option>
@@ -246,7 +246,7 @@ $breadcrumbs = [
                                                             </div>
                                                             <div class="mb-3">
                                                                 <label for="status_id" class="form-label">Status *</label>
-                                                                <select class="form-select" id="statusSelect{{ $complaint->id }}" name="status_id" required>
+                                                                <select class="form-select tom-select" id="statusSelect{{ $complaint->id }}" name="status_id" required>
                                                                     @foreach($statuses as $status)
                                                                     <option value="{{ $status->id }}" {{ old('status_id', $complaint->status_id) == $status->id ? 'selected' : '' }}>
                                                                         {{ $status->display_name }}
@@ -280,7 +280,7 @@ $breadcrumbs = [
                                                         <div class="modal-body">
                                                             <div class="mb-3">
                                                                 <label for="assigned_to" class="form-label">Revert to Manager</label>
-                                                                <select class="form-select" name="assigned_to" required>
+                                                                <select class="form-select tom-select" name="assigned_to" required>
                                                                     <option value="">Select Manager</option>
                                                                     @foreach($managers as $manager)
                                                                     <option value="{{ $manager->id }}" @if($manager->id == $complaint->assigned_by) selected @endif>
@@ -380,6 +380,17 @@ $breadcrumbs = [
             localStorage.setItem('complaintsFilterOpen', 'closed');
             chevron.classList.remove('bi-chevron-up');
             chevron.classList.add('bi-chevron-down');
+        });
+
+        // Tom Select initialization for all .tom-select dropdowns
+        document.querySelectorAll('select.tom-select').forEach(function(el) {
+            new TomSelect(el, {
+                create: false,
+                sortField: {
+                    field: 'text',
+                    direction: 'asc'
+                }
+            });
         });
     });
 </script>
