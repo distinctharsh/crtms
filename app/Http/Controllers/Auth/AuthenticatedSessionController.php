@@ -15,7 +15,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        return view('auth.login');
+        return redirect('/home');
     }
 
     /**
@@ -43,4 +43,4 @@ class AuthenticatedSessionController extends Controller
 
         return redirect('/home');
     }
-} 
+}

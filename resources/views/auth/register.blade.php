@@ -57,7 +57,7 @@
                                 onchange="document.getElementById('verticalBox').style.display = (this.options[this.selectedIndex].text.toLowerCase().includes('vm') || this.options[this.selectedIndex].text.toLowerCase().includes('nfo')) ? 'block' : 'none';">
                                 <option value="">Select a role</option>
                                 @foreach($roles as $role)
-                                    <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                                <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
                                 @endforeach
                             </select>
                             @error('role_id')
@@ -87,7 +87,7 @@
 
                         <div class="text-center mt-3">
                             <p class="mb-0">Already have an account?
-                                <a href="{{ route('login') }}" class="text-decoration-none">Login</a>
+                                <a href="{{ route('home') }}" class="text-decoration-none">Login</a>
                             </p>
                         </div>
                     </form>

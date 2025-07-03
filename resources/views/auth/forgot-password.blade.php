@@ -15,15 +15,15 @@
                         <!-- Email Address -->
                         <div class="mb-3">
                             <label for="email" class="form-label">Email</label>
-                            <input type="email" class="form-control @error('email') is-invalid @enderror" 
-                                   id="email" name="email" value="{{ old('email') }}" required autofocus>
+                            <input type="email" class="form-control @error('email') is-invalid @enderror"
+                                id="email" name="email" value="{{ old('email') }}" required autofocus>
                             @error('email')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                            <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
                         <div class="d-flex justify-content-between align-items-center mb-3">
-                            <a href="{{ route('login') }}" class="text-decoration-none">
+                            <a href="{{ route('home') }}" class="text-decoration-none">
                                 Back to login
                             </a>
 
@@ -37,4 +37,4 @@
         </div>
     </div>
 </div>
-@endsection 
+@endsection

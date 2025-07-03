@@ -26,6 +26,7 @@ class Kernel extends HttpKernel
     protected $middlewareGroups = [
         'web' => [
             // Web middleware group
+            \App\Http\Middleware\SessionTimeout::class,
         ],
 
         'api' => [
@@ -65,4 +66,4 @@ class Kernel extends HttpKernel
     protected $routeMiddleware = [
         //
     ];
-} 
+}

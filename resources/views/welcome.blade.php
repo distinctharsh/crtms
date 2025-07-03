@@ -169,10 +169,51 @@
         color: #d63384;
         border: 1px solid #f8d7da;
     }
+    .custom-global-alert {
+        border-radius: 16px;
+        font-size: 1.08rem;
+        padding: 1rem 1.5rem;
+        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+        border: none;
+        opacity: 0.98;
+        animation: slideDown 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @keyframes slideDown {
+        0% { transform: translateY(-40px) scale(0.95); opacity: 0; }
+        100% { transform: translateY(0) scale(1); opacity: 0.98; }
+    }
     </style>
 </head>
 
 <body>
+    @if (session('success') || session('error') || session('warning') || session('info') || session('message') || $errors->any())
+        @php
+            // Priority: error > success > warning > info > message > errors bag
+            $type = session('error') ? 'danger'
+                : (session('success') ? 'success'
+                : (session('warning') ? 'warning'
+                : (session('info') ? 'info'
+                : (session('message') ? 'primary'
+                : ($errors->any() ? 'danger' : 'primary')))));
+            // Collect all messages
+            $messages = [];
+            if(session('error')) $messages[] = session('error');
+            if(session('success')) $messages[] = session('success');
+            if(session('warning')) $messages[] = session('warning');
+            if(session('info')) $messages[] = session('info');
+            if(session('message')) $messages[] = session('message');
+            // Laravel's withErrors() (can be MessageBag or array)
+            if($errors->any()) {
+                foreach($errors->all() as $err) $messages[] = $err;
+            }
+        @endphp
+        <div id="global-alert" class="alert alert-{{ $type }} custom-global-alert alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-4 shadow-lg" role="alert" style="z-index: 2000; min-width: 320px; max-width: 90vw;">
+            @foreach($messages as $msg)
+                <div class="fw-semibold">{{ $msg }}</div>
+            @endforeach
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
     <!-- Navigation -->
     @include('layouts.navbar')
 
@@ -488,6 +529,17 @@
                             searchError.classList.remove('d-none');
                         });
                 });
+            }
+            // Global alert auto-dismiss
+            const alertBox = document.getElementById('global-alert');
+            if (alertBox) {
+                setTimeout(() => {
+                    alertBox.classList.remove('show');
+                    alertBox.classList.add('fade');
+                    setTimeout(() => {
+                        alertBox.remove();
+                    }, 500);
+                }, 5000);
             }
         });
     </script>
