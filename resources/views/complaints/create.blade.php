@@ -27,15 +27,15 @@
                     <!-- First Row - User Name and Intercom -->
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="user_name" class="form-label">Name</label>
+                            <label for="user_name" class="form-label">Name <span class="text-danger">*</span></label>
                             <input type="text" class="form-control @error('user_name') is-invalid @enderror"
-                                id="user_name" name="user_name" value="{{ old('user_name') }}" placeholder="Name of the User" required>
+                                id="user_name" name="user_name" value="{{ old('user_name') }}" placeholder="Name of the User" required maxlength="30">
                             @error('user_name')
                             <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
                         <div class="col-md-6">
-                            <label for="intercom" class="form-label">Intercom / Telephone No.</label>
+                            <label for="intercom" class="form-label">Intercom / Telephone No. <span class="text-danger">*</span></label>
                             <input type="number" class="form-control @error('intercom') is-invalid @enderror"
                                 id="intercom" name="intercom" value="{{ old('intercom') }}" oninput="this.value = this.value.replace(/[^0-9]/g, '').substring(0, 10)" placeholder="Enter Telephone / Intercom No." required
                                 maxlength="10">
@@ -48,7 +48,7 @@
                     <!-- Second Row - Network Type and Priority -->
                     <div class="row mb-3">
                     <div class="col-md-6">
-                            <label for="section_id" class="form-label">Section</label>
+                            <label for="section_id" class="form-label">Section <span class="text-danger">*</span></label>
                             <select class="form-select @error('section_id') is-invalid @enderror"
                                 id="section_id" name="section_id" required>
                                 <option value="">Select --</option>
@@ -63,7 +63,7 @@
                             @enderror
                         </div>
                         <div class="col-md-6">
-                            <label for="network_type_id" class="form-label">Issue Type</label>
+                            <label for="network_type_id" class="form-label">Issue Type <span class="text-danger">*</span></label>
                             <select class="form-select @error('network_type_id') is-invalid @enderror"
                                 id="network_type_id" name="network_type_id" required>
                                 <option value="">Select --</option>
@@ -85,7 +85,7 @@
                     <!-- Third Row - Vertical and Section -->
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label for="vertical_id" class="form-label">Vertical</label>
+                            <label for="vertical_id" class="form-label">Vertical <span class="text-danger">*</span></label>
                             <select class="form-select @error('vertical_id') is-invalid @enderror"
                                 id="vertical_id" name="vertical_id" required>
                                 <option value="">Select --</option>
@@ -101,7 +101,7 @@
                         </div>
 
                         <div class="col-md-6">
-                            <label class="form-label">Priority</label>
+                            <label class="form-label">Priority <span class="text-danger">*</span></label>
                             <div class="d-flex gap-3">
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="priority" id="high" value="high" {{ old('priority') == 'high' ? 'checked' : '' }} required>
@@ -124,7 +124,7 @@
 
                     <!-- Complaint Description (Full Width) -->
                     <div class="mb-3">
-                        <label for="description" class="form-label">Ticket Description</label>
+                        <label for="description" class="form-label">Ticket Description <span class="text-danger">*</span></label>
                         <textarea class="form-control @error('description') is-invalid @enderror" placeholder="Enter the Issue.. "
                             id="description" name="description" rows="3" required>{{ old('description') }}</textarea>
                         @error('description')
@@ -144,7 +144,7 @@
                     </div>
 
                     <div class="d-grid">
-                        <button type="submit" class="btn btn-primary" id="submitTicketBtn">
+                        <button type="submit" class="btn btn-primary shadow-sm" id="submitTicketBtn" style="border-radius: 12px;">
                             <span id="submitBtnText">Submit Ticket</span>
                             <span id="submitBtnSpinner" class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                         </button>
@@ -223,3 +223,79 @@
     </div>
 </div>
 @endsection
+
+@push('style')
+<style>
+body {
+    background: linear-gradient(120deg, #f8f9fa 0%, #e3eafc 100%);
+    min-height: 100vh;
+}
+.card {
+    border-radius: 22px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.13);
+    border: none;
+    margin-bottom: 2rem;
+    transition: box-shadow 0.2s;
+}
+.card:hover {
+    box-shadow: 0 12px 40px 0 rgba(13, 110, 253, 0.18);
+}
+.card-header {
+    border-radius: 22px 22px 0 0;
+    background: linear-gradient(90deg, #0d6efd 0%, #0a58ca 100%);
+    color: #fff;
+    font-weight: 700;
+    font-size: 1.18rem;
+    letter-spacing: 0.7px;
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.07);
+}
+.form-label {
+    font-weight: 600;
+    letter-spacing: 0.2px;
+    margin-bottom: 0.35rem;
+}
+input.form-control, select.form-select, textarea.form-control {
+    border-radius: 14px;
+    font-size: 1.09rem;
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.07);
+    border: 1px solid #e3eafc;
+    background: #f8fafd;
+    transition: box-shadow 0.2s, border-color 0.2s;
+}
+input.form-control:focus, select.form-select:focus, textarea.form-control:focus {
+    box-shadow: 0 0 0 2px #0d6efd33;
+    border-color: #0d6efd;
+    background: #fff;
+}
+.btn-primary {
+    background: linear-gradient(90deg, #0d6efd 0%, #0a58ca 100%);
+    border: none;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(13, 110, 253, 0.10);
+    transition: background 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover {
+    background: linear-gradient(90deg, #0b5ed7 0%, #0a58ca 100%);
+    box-shadow: 0 4px 16px rgba(13, 110, 253, 0.15);
+}
+.d-grid {
+    margin-top: 1.5rem;
+}
+.card-title {
+    letter-spacing: 0.5px;
+    font-size: 1.15rem;
+}
+.card-body {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+}
+@media (max-width: 991px) {
+    .card-body {
+        padding-top: 1.2rem;
+        padding-bottom: 1.2rem;
+    }
+}
+</style>
+@endpush
