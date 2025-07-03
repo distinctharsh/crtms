@@ -108,7 +108,7 @@
                                     <label class="form-check-label" for="high">High</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="priority" id="medium" value="medium" {{ old('priority') == 'medium' ? 'checked' : '' }}>
+                                    <input class="form-check-input" type="radio" name="priority" id="medium" value="medium" {{ old('priority') == 'medium' ? 'checked' : 'checked' }}>
                                     <label class="form-check-label" for="medium">Medium</label>
                                 </div>
                                 <div class="form-check">
