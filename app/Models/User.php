@@ -162,11 +162,14 @@ class User extends Authenticatable
         }
         // VM
         elseif ($this->isVM()) {
-            $query->where(function ($q) {
-                $q->where('id', $this->id) // self
-                    ->orWhereHas('role', function ($r) {
-                        $r->where('slug', 'nfo');
-                    });
+            $query->where(function ($q) use ($complaint) {
+                // Only include self if not already assigned
+                if (!$complaint || $complaint->assigned_to != $this->id) {
+                    $q->where('id', $this->id);
+                }
+                $q->orWhereHas('role', function ($r) {
+                    $r->where('slug', 'nfo');
+                });
             });
             // 💡 Vertical match only if complaint is given
             if ($complaint) {
@@ -178,8 +181,8 @@ class User extends Authenticatable
         // NFO
         elseif ($this->isNFO()) {
             $query->whereHas('role', function ($q) {
-                $q->whereIn('slug', ['nfo', 'vm']);
-            })->where('id', '!=', $this->id); // exclude self
+                $q->where('slug', 'vm');
+            });
             // 💡 Vertical match only if complaint is given
             if ($complaint) {
                 $query->whereHas('verticals', function ($q) use ($complaint) {
