@@ -118,6 +118,7 @@ $breadcrumbs = [
                         <table id="complaintsTable" class="table table-hover table-bordered table-striped align-middle w-100">
                             <thead class="table-primary">
                                 <tr>
+                                    <th class="no-sort">S.No.</th>
                                     <th>Reference</th>
                                     <th>User</th>
                                     <th>Section</th>
@@ -133,6 +134,7 @@ $breadcrumbs = [
                             <tbody>
                                 @foreach($complaints as $complaint)
                                 <tr>
+                                    <td>{{ $loop->iteration }}</td>
                                     <td>{{ $complaint->reference_number }}</td>
                                     <td>{{ $complaint->user_name }}</td>
                                     <td>{{ $complaint->section->name }}</td>
@@ -318,9 +320,7 @@ $breadcrumbs = [
     $(document).ready(function() {
         var dt = $('#complaintsTable').DataTable({
             responsive: true,
-            order: [
-                [0, 'desc']
-            ],
+            order: [[1, 'desc']],
             pageLength: 10,
             lengthMenu: [[10, 15, 20, 50, 100, -1], [10, 15, 20, 50, 100, 'All']],
             language: {
@@ -328,6 +328,9 @@ $breadcrumbs = [
                 searchPlaceholder: "Search complaints..."
             },
             dom: 'lfrtip',
+            columnDefs: [
+                { orderable: false, targets: 0 }
+            ],
             drawCallback: function() {
                 // Re-initialize modals or tooltips if needed
             }
