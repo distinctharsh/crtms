@@ -23,4 +23,9 @@ class Role extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function statuses()
+    {
+        return $this->belongsToMany(Status::class, 'role_status');
+    }
 }

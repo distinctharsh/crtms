@@ -29,6 +29,11 @@ class Status extends Model
         return $this->hasMany(Complaint::class);
     }
 
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_status');
+    }
+
     // Scopes
     public function scopeActive($query)
     {

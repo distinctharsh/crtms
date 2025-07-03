@@ -153,7 +153,6 @@ class User extends Authenticatable
             $query->whereHas('role', function ($q) {
                 $q->whereIn('slug', ['vm', 'nfo']);
             });
-            // 💡 Additional filter: same vertical only if complaint is given
             if ($complaint) {
                 $query->whereHas('verticals', function ($q) use ($complaint) {
                     $q->where('vertical_id', $complaint->vertical_id);
@@ -162,16 +161,9 @@ class User extends Authenticatable
         }
         // VM
         elseif ($this->isVM()) {
-            $query->where(function ($q) use ($complaint) {
-                // Only include self if not already assigned
-                if (!$complaint || $complaint->assigned_to != $this->id) {
-                    $q->where('id', $this->id);
-                }
-                $q->orWhereHas('role', function ($r) {
-                    $r->where('slug', 'nfo');
-                });
+            $query->whereHas('role', function ($q) {
+                $q->whereIn('slug', ['vm', 'nfo']);
             });
-            // 💡 Vertical match only if complaint is given
             if ($complaint) {
                 $query->whereHas('verticals', function ($q) use ($complaint) {
                     $q->where('vertical_id', $complaint->vertical_id);
@@ -183,7 +175,6 @@ class User extends Authenticatable
             $query->whereHas('role', function ($q) {
                 $q->where('slug', 'vm');
             });
-            // 💡 Vertical match only if complaint is given
             if ($complaint) {
                 $query->whereHas('verticals', function ($q) use ($complaint) {
                     $q->where('vertical_id', $complaint->vertical_id);

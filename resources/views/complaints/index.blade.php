@@ -43,7 +43,7 @@ $breadcrumbs = [
                                                 <label class="form-label mb-1">Status</label>
                                                 <select name="status" class="form-select tom-select">
                                                     <option value="">All Status</option>
-                                                    @foreach($statuses as $status)
+                                                    @foreach($allowedStatuses as $status)
                                                     <option value="{{ $status->id }}" {{ collect(request('status'))->contains($status->id) ? 'selected' : '' }}>
                                                         {{ $status->display_name }}
                                                     </option>
@@ -243,7 +243,7 @@ $breadcrumbs = [
                                                             <div class="mb-3">
                                                                 <label for="status_id" class="form-label">Status *</label>
                                                                 <select class="form-select tom-select" id="statusSelect{{ $complaint->id }}" name="status_id" required>
-                                                                    @foreach($statuses as $status)
+                                                                    @foreach($allowedStatuses as $status)
                                                                     <option value="{{ $status->id }}" {{ old('status_id', $complaint->status_id) == $status->id ? 'selected' : '' }}>
                                                                         {{ $status->display_name }}
                                                                     </option>

@@ -188,6 +188,15 @@
                         </div>
                     </div>
 
+                    {{-- Example: Status filter links --}}
+                    @if(isset($allowedStatuses))
+                        @foreach($allowedStatuses as $status)
+                            <a href="{{ route('complaints.index', ['status' => $status->id]) }}" class="btn btn-outline-primary btn-sm m-1">
+                                {{ $status->display_name }}
+                            </a>
+                        @endforeach
+                    @endif
+
                 </div>
             </div>
         </div>

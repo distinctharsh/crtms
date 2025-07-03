@@ -247,7 +247,7 @@ $breadcrumbs = [
                     <label for="status_id" class="form-label">Status <span class="text-danger">*</span></label>
                     <select name="status_id" id="status_id" class="form-select" required>
                         <option value="">Select status</option>
-                        @foreach($statusOptions as $status)
+                        @foreach($allowedStatuses as $status)
                         <option value="{{ $status->id }}">{{ $status->display_name }}</option>
                         @endforeach
                     </select>

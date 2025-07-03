@@ -7,6 +7,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MastersController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleStatusController;
 
 
 
@@ -109,6 +110,11 @@ Route::middleware(['auth', 'can:isManager'])->group(function () {
     Route::post('/masters/verticals', [MastersController::class, 'storeVertical'])->name('masters.verticals.store');
     Route::put('/masters/verticals/{vertical}', [MastersController::class, 'updateVertical'])->name('masters.verticals.update');
     Route::delete('/masters/verticals/{vertical}', [MastersController::class, 'destroyVertical'])->name('masters.verticals.destroy');
+});
+
+Route::middleware(['auth', 'can:manage-roles'])->group(function () {
+    Route::get('/admin/role-status', [RoleStatusController::class, 'index'])->name('admin.role-status.index');
+    Route::post('/admin/role-status/{role}', [RoleStatusController::class, 'update'])->name('admin.role-status.update');
 });
 
 require __DIR__ . '/auth.php';

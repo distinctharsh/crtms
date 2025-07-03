@@ -62,6 +62,7 @@ class DashboardController extends Controller
             foreach ($todayComplaints as $complaint) {
                 $complaint->assignableUsers = $user->getAssignableUsers($complaint);
             }
+            $allowedStatuses = $user->role->statuses()->where('is_active', true)->ordered()->get();
             $data = [
                 'totalComplaints' => (clone $baseQuery)->count(),
                 'unassignedComplaints' => (clone $baseQuery)->where('status_id', $statusIds->get('unassigned'))->count(),
@@ -82,6 +83,7 @@ class DashboardController extends Controller
                 'unassignedStatusId' => $statusIds->get('unassigned'),
                 'completedStatusId' => $statusIds->get('completed'),
                 'assignToMeStatusId' => null,
+                'allowedStatuses' => $allowedStatuses,
             ];
             
             // Remove the old recentComplaints section from the view

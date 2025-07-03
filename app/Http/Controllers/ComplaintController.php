@@ -26,7 +26,10 @@ class ComplaintController extends Controller
 
     public function index(Request $request)
     {
-        $user = Auth::user();
+        $user = auth()->user();
+        if (!$user) {
+            return redirect()->route('home');
+        }
 
         $query = Complaint::query()->with(['client', 'assignedTo', 'networkType', 'vertical', 'status']);
 
@@ -130,7 +133,7 @@ class ComplaintController extends Controller
         $managers = User::whereHas('role', function ($q) {
             $q->where('slug', 'manager');
         })->get();
-        $statuses = Status::active()->ordered()->where('name', '!=', 'assign_to_me')->get();
+        $allowedStatuses = $user->role->statuses()->where('is_active', true)->ordered()->get();
 
         // Remove perPage and server-side pagination
         $complaints = $query->latest()->get();
@@ -158,7 +161,7 @@ class ComplaintController extends Controller
         $verticals = Vertical::get();
         $networkTypes = NetworkType::get();
         $sections = Section::get();
-        return view('complaints.index', compact('complaints', 'usersList', 'managers', 'statuses', 'networkTypes', 'sections', 'verticals'));
+        return view('complaints.index', compact('complaints', 'usersList', 'managers', 'allowedStatuses', 'networkTypes', 'sections', 'verticals'));
     }
 
 
@@ -522,27 +525,21 @@ class ComplaintController extends Controller
 
     public function show(Complaint $complaint)
     {
+        $user = auth()->user();
+        if (!$user) {
+            return redirect()->route('login');
+        }
         $complaint->load(['client', 'assignedTo', 'actions.user', 'networkType', 'vertical', 'section', 'status']);
-
-        // Statuses for assigned user to update
-        $statusOptions = \App\Models\Status::whereIn('name', [
-            'pending_with_vendor',
-            'pending_with_user',
-            'in_progress',
-            'completed'
-        ])->ordered()->get();
-
+        $allowedStatuses = $user->role->statuses()->where('is_active', true)->ordered()->get();
         // Show close/assign for manager (or VM if assigned to NFO) when status is completed
         $showCloseOrAssign = false;
-        $user = Auth::user();
         if ($complaint->isCompleted()) {
             if (($user && $user->isManager()) || ($user && $user->isVM() && $complaint->assignedTo && $complaint->assignedTo->isNFO())) {
                 $showCloseOrAssign = true;
             }
         }
         $closeStatus = \App\Models\Status::where('name', 'closed')->first();
-
-        return view('complaints.show', compact('complaint', 'statusOptions', 'showCloseOrAssign', 'closeStatus'));
+        return view('complaints.show', compact('complaint', 'allowedStatuses', 'showCloseOrAssign', 'closeStatus'));
     }
 
     public function comment(Request $request, Complaint $complaint)
