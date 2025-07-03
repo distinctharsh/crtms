@@ -153,13 +153,13 @@ class User extends Authenticatable
             $query->whereHas('role', function ($q) {
                 $q->whereIn('slug', ['vm', 'nfo']);
             });
-
             // 💡 Additional filter: same vertical only if complaint is given
             if ($complaint) {
-                $query->where('vertical_id', $complaint->vertical_id);
+                $query->whereHas('verticals', function ($q) use ($complaint) {
+                    $q->where('vertical_id', $complaint->vertical_id);
+                });
             }
         }
-
         // VM
         elseif ($this->isVM()) {
             $query->where(function ($q) {
@@ -168,25 +168,25 @@ class User extends Authenticatable
                         $r->where('slug', 'nfo');
                     });
             });
-
             // 💡 Vertical match only if complaint is given
             if ($complaint) {
-                $query->where('vertical_id', $complaint->vertical_id);
+                $query->whereHas('verticals', function ($q) use ($complaint) {
+                    $q->where('vertical_id', $complaint->vertical_id);
+                });
             }
         }
-
         // NFO
         elseif ($this->isNFO()) {
             $query->whereHas('role', function ($q) {
                 $q->whereIn('slug', ['nfo', 'vm']);
             })->where('id', '!=', $this->id); // exclude self
-
             // 💡 Vertical match only if complaint is given
             if ($complaint) {
-                $query->where('vertical_id', $complaint->vertical_id);
+                $query->whereHas('verticals', function ($q) use ($complaint) {
+                    $q->where('vertical_id', $complaint->vertical_id);
+                });
             }
         }
-
         return $query->get(['id', 'username', 'full_name', 'role_id']);
     }
 
