@@ -8,6 +8,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MastersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleStatusController;
+use App\Http\Controllers\StatusTransitionController;
 
 
 
@@ -112,9 +113,11 @@ Route::middleware(['auth', 'can:isManager'])->group(function () {
     Route::delete('/masters/verticals/{vertical}', [MastersController::class, 'destroyVertical'])->name('masters.verticals.destroy');
 });
 
-Route::middleware(['auth', 'can:manage-roles'])->group(function () {
-    Route::get('/admin/role-status', [RoleStatusController::class, 'index'])->name('admin.role-status.index');
-    Route::post('/admin/role-status/{role}', [RoleStatusController::class, 'update'])->name('admin.role-status.update');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/admin/role-status', [\App\Http\Controllers\RoleStatusController::class, 'index'])->name('admin.role-status.index');
+    Route::post('/admin/role-status/{role}', [\App\Http\Controllers\RoleStatusController::class, 'update'])->name('admin.role-status.update');
+    Route::get('/admin/status-transitions', [\App\Http\Controllers\StatusTransitionController::class, 'index'])->name('admin.status-transitions.index');
+    Route::post('/admin/status-transitions', [\App\Http\Controllers\StatusTransitionController::class, 'update'])->name('admin.status-transitions.update');
 });
 
 require __DIR__ . '/auth.php';

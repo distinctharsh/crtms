@@ -30,6 +30,15 @@
 </li>
 @endif
 
+@if(auth()->user()->isManager() || auth()->user()->isAdmin())
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.role-status.index') }}">Role-Status Mapping</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.status-transitions.index') }}">Status Workflow</a>
+    </li>
+@endif
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
             <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style="width: 36px; height: 36px; font-size: 1rem;">
