@@ -90,6 +90,7 @@
                                         <table id="complaintsTable" class="table table-hover table-bordered table-striped align-middle w-100">
                                             <thead class="table-primary">
                                                 <tr>
+                                                    <th class="no-sort">S.No.</th>
                                                     <th>Reference</th>
                                                     <th>User</th>
                                                     <th>Section</th>
@@ -105,6 +106,7 @@
                                             <tbody>
                                                 @forelse($todayComplaints as $complaint)
                                                 <tr>
+                                                    <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $complaint->reference_number }}</td>
                                                     <td>{{ $complaint->user_name  ?? '-'}}</td>
                                                     <td>{{ $complaint->section  ? $complaint->section->name : ''}}</td>
@@ -215,35 +217,19 @@
 
 <script>
     $(document).ready(function() {
-        var dt = $('#complaintsTable').DataTable({
+        $('#complaintsTable').DataTable({
             responsive: true,
+            order: [[1, 'desc']], // Reference column descending
             pageLength: 10,
-            lengthMenu: [
-                [10, 25, 50, -1],
-                [10, 25, 50, 'All']
-            ],
-            order: [
-                [0, 'desc']
-            ],
+            lengthMenu: [[10, 15, 20, 50, 100, -1], [10, 15, 20, 50, 100, 'All']],
             language: {
-                search: "<span class='fw-semibold'>Search:</span>",
-                lengthMenu: "Show _MENU_ entries",
-                info: "Showing _START_ to _END_ of _TOTAL_ complaints",
-                infoEmpty: "No complaints available",
-                zeroRecords: "No matching complaints found",
-                paginate: {
-                    first: "First",
-                    last: "Last",
-                    next: "→",
-                    previous: "←"
-                }
+                search: "",
+                searchPlaceholder: "Search complaints..."
             },
-            dom: '<"datatable-header row mb-3"<"col-md-6"l><"col-md-6 text-end"f>>' +
-                '<"datatable-custom-search row mb-2"<"col-12"t>>' +
-                '<"datatable-footer row mt-3"<"col-md-6"i><"col-md-6"p>>',
-        });
-        dt.on('draw', function() {
-            // No custom re-init needed for Bootstrap 5 modals
+            dom: 'lfrtip',
+            columnDefs: [
+                { orderable: false, targets: 0 } // Disable sorting on S.No.
+            ]
         });
     });
 </script>
