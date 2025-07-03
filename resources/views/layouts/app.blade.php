@@ -94,6 +94,37 @@
         #usersTable_filter {
             float: right;
         }
+
+        .filter-card {
+            border-radius: 16px;
+            box-shadow: 0 4px 18px rgba(13, 110, 253, 0.08);
+            margin-bottom: 1rem !important;
+            padding-bottom: 0 !important;
+        }
+        .filter-card .card-header {
+            border-radius: 16px 16px 0 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* Reduce card body padding */
+        .card-body,
+        .filter-card .card-body {
+            padding: 1rem 1.25rem !important;
+        }
+
+        /* Reduce table cell padding */
+        .table > :not(caption) > * > * {
+            padding-top: 0.45rem;
+            padding-bottom: 0.45rem;
+        }
+
+        /* Reduce DataTable header/footer margin */
+        .dataTables_wrapper .datatable-header,
+        .dataTables_wrapper .datatable-footer {
+            margin-bottom: 0.5rem !important;
+            margin-top: 0.5rem !important;
+        }
     </style>
 </head>
 
