@@ -45,8 +45,9 @@ class ComplaintController extends Controller
                 ])->pluck('id');
                 $query->whereIn('status_id', $activeStatusIds);
             } elseif ($user->isVM()) {
-                // VM: Only complaints matching user's vertical
-                $query->where('vertical_id', $user->vertical_id);
+                // VM: Only complaints matching user's verticals
+                $verticalIds = $user->verticals->pluck('id');
+                $query->whereIn('vertical_id', $verticalIds);
             } elseif ($user->isNFO()) {
                 // NFO: Only complaints assigned to them
                 $query->where('assigned_to', $user->id);

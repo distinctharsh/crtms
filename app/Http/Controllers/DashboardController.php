@@ -23,14 +23,16 @@ class DashboardController extends Controller
                 // No need to modify $baseQuery
             }
 
-            // VM: Filter by vertical_id
+            // VM: Filter by verticals
             elseif ($user->isVM()) {
-                $baseQuery->where('vertical_id', $user->vertical_id);
+                $verticalIds = $user->verticals->pluck('id');
+                $baseQuery->whereIn('vertical_id', $verticalIds);
             }
 
-            // NFO: Filter by vertical_id + assigned_to = user id
+            // NFO: Filter by verticals + assigned_to = user id
             elseif ($user->isNFO()) {
-                $baseQuery->where('vertical_id', $user->vertical_id)
+                $verticalIds = $user->verticals->pluck('id');
+                $baseQuery->whereIn('vertical_id', $verticalIds)
                     ->where('assigned_to', $user->id);
             }
 

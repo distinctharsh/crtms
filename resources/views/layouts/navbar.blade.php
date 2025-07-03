@@ -42,8 +42,8 @@
               <small class="text-muted">{{ auth()->user()->role->name ?? 'No Role' }}
 
                 @unless(auth()->user()->isAdmin() || auth()->user()->isManager())
-                @if(auth()->user()->vertical)
-                (Vertical: {{ auth()->user()->vertical->name }})
+                @if(auth()->user()->verticals && auth()->user()->verticals->count())
+                (Verticals: {{ auth()->user()->verticals->pluck('name')->implode(', ') }})
                 @endif
                 @endunless
               </small>

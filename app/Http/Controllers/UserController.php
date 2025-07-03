@@ -29,8 +29,8 @@ class UserController extends Controller
     {
         $roles = Role::whereNotIn('slug', ['admin', 'client'])->get();
         $verticals = Vertical::all();
-
-        return view('users.edit', compact('user', 'roles', 'verticals'));
+        $selectedVerticals = $user->verticals->pluck('id')->toArray();
+        return view('users.edit', compact('user', 'roles', 'verticals', 'selectedVerticals'));
     }
 
 
@@ -41,16 +41,17 @@ class UserController extends Controller
             'username' => ['required', 'string', 'max:255', Rule::unique('users')->ignore($user->id)],
             'role_id' => 'nullable|exists:roles,id',
             'password' => 'nullable|string|min:6|confirmed',
-            'vertical_id'  => 'nullable|exists:verticals,id',
+            'vertical_ids'  => 'nullable|array',
+            'vertical_ids.*' => 'exists:verticals,id',
         ]);
 
-        $data = $request->only('full_name', 'username', 'role_id', 'vertical_id');
+        $data = $request->only('full_name', 'username', 'role_id');
         if ($request->filled('password')) {
             $data['password'] = Hash::make($request->password);
         }
-
         $user->update($data);
-
+        // Sync verticals
+        $user->verticals()->sync($request->input('vertical_ids', []));
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
@@ -81,7 +82,8 @@ class UserController extends Controller
                 'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{6,}$/'
             ],
             'role_id'      => 'required|exists:roles,id',
-            'vertical_id'  => 'nullable|exists:verticals,id',
+            'vertical_ids'  => 'nullable|array',
+            'vertical_ids.*' => 'exists:verticals,id',
         ]);
 
         if ($validator->fails()) {
@@ -90,14 +92,14 @@ class UserController extends Controller
                 ->withInput();
         }
 
-        User::create([
+        $user = User::create([
             'username'    => $request->username,
             'full_name'   => $request->full_name,
             'password'    => \Hash::make($request->password),
             'role_id'     => $request->role_id,
-            'vertical_id' => $request->vertical_id,
         ]);
-
+        // Attach verticals
+        $user->verticals()->sync($request->input('vertical_ids', []));
         return redirect()->route('users.index')->with('success', 'User created successfully!');
     }
 }

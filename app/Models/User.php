@@ -28,8 +28,7 @@ class User extends Authenticatable
         'password',
         'full_name',
         'address',
-        'role_id',
-        'vertical_id'
+        'role_id'
     ];
 
     /**
@@ -197,8 +196,8 @@ class User extends Authenticatable
         return 'username';
     }
 
-    public function vertical()
+    public function verticals()
     {
-        return $this->belongsTo(Vertical::class);
+        return $this->belongsToMany(Vertical::class, 'user_vertical');
     }
 }

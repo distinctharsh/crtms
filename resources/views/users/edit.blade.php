@@ -78,17 +78,17 @@
                         @endif
                     </div>
 
-                    <!-- Vertical -->
+                    <!-- Verticals -->
                     <div class="mb-3" id="verticalBox" style="display: none;">
-                        <label for="vertical_id" class="form-label">Vertical</label>
-                        <select name="vertical_id" class="form-control">
-                            <option value="">Select Vertical</option>
+                        <label for="vertical_ids" class="form-label">Verticals</label>
+                        <select name="vertical_ids[]" id="vertical_ids" class="form-control" multiple>
                             @foreach($verticals as $vertical)
-                                <option value="{{ $vertical->id }}" {{ old('vertical_id', $user->vertical_id) == $vertical->id ? 'selected' : '' }}>
+                                <option value="{{ $vertical->id }}" {{ collect(old('vertical_ids', $user->verticals->pluck('id')->toArray()))->contains($vertical->id) ? 'selected' : '' }}>
                                     {{ $vertical->name }}
                                 </option>
                             @endforeach
                         </select>
+                        <small class="form-text text-muted">Hold Ctrl (Windows) or Cmd (Mac) to select multiple.</small>
                     </div>
 
                     <div class="d-grid gap-2">

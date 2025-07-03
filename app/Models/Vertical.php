@@ -21,4 +21,9 @@ class Vertical extends Model
     {
         return $this->hasMany(Complaint::class, 'vertical_id');
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'user_vertical');
+    }
 }
