@@ -10,6 +10,9 @@ class RoleStatusController extends Controller
 {
     public function index()
     {
+        if (!auth()->user()->isManager() && !auth()->user()->isAdmin()) {
+            abort(403);
+        }
         $user = auth()->user()->id;
         if (!in_array($user->role_id, [1, 2])) {
             abort(403);
@@ -21,6 +24,9 @@ class RoleStatusController extends Controller
 
     public function update(Request $request, Role $role)
     {
+        if (!auth()->user()->isManager() && !auth()->user()->isAdmin()) {
+            abort(403);
+        }
         $user = auth()->user()->id;
         if (!in_array($user->role_id, [1, 2])) {
             abort(403);

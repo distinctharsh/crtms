@@ -11,10 +11,10 @@ class StatusTransitionController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
-        if (!in_array($user->role_id, [1, 2])) {
+        if (!auth()->user()->isManager() && !auth()->user()->isAdmin()) {
             abort(403);
         }
+        $user = auth()->user();
         $roles = Role::all();
         $statuses = Status::active()->ordered()->get();
         $transitions = StatusTransition::all();
@@ -23,8 +23,7 @@ class StatusTransitionController extends Controller
 
     public function update(Request $request)
     {
-        $user = auth()->user();
-        if (!in_array($user->role_id, [1, 2])) {
+        if (!auth()->user()->isManager() && !auth()->user()->isAdmin()) {
             abort(403);
         }
         $request->validate([
