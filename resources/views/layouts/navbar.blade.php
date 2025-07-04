@@ -3,8 +3,8 @@
     <div class="d-flex align-items-center" style="height: 80px;">
       <img src="{{ asset('images/emblem-dark.png') }}" alt="Emblem" class="h-100" style="object-fit: contain;">
       <div class="d-flex flex-column ms-3">
-        <span class="bold-font">Cabinet Secretariat</span>
-        <strong lang="hi" class="bold-font">Government of India</strong>
+        <h4 class="bold-font">Cabinet Secretariat</h4>
+        <span lang="hi" class="bold-font">Government of India</span>
       </div>
     </div>
 
@@ -58,7 +58,7 @@
             <li>
               <form method="POST" action="{{ route('logout') }}">
                 @csrf
-                <button type="submit" class="dropdown-item text-danger">Logout</button>
+                <button type="submit" class="dropdown-item text-danger text-center">Logout</button>
               </form>
             </li>
           </ul>

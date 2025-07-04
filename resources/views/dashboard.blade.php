@@ -219,16 +219,23 @@
     $(document).ready(function() {
         $('#complaintsTable').DataTable({
             responsive: true,
-            order: [[1, 'desc']], // Reference column descending
+            order: [
+                [1, 'desc']
+            ], // Reference column descending
             pageLength: 10,
-            lengthMenu: [[10, 15, 20, 50, 100, -1], [10, 15, 20, 50, 100, 'All']],
+            lengthMenu: [
+                [10, 15, 20, 50, 100, -1],
+                [10, 15, 20, 50, 100, 'All']
+            ],
             language: {
                 search: "",
                 searchPlaceholder: "Search complaints..."
             },
             dom: 'lfrtip',
-            columnDefs: [
-                { orderable: false, targets: 0 } // Disable sorting on S.No.
+            columnDefs: [{
+                    orderable: false,
+                    targets: 0
+                } // Disable sorting on S.No.
             ]
         });
     });
@@ -296,6 +303,3 @@
 @endpush
 
 @stack('scripts')
-</body>
-
-</html>
