@@ -31,7 +31,7 @@ $breadcrumbs = [
                                 aria-expanded="{{ (request('status') || request('by') || request('vertical') || request('networktype') || request('section') || request('date_from') || request('date_to')) ? 'true' : 'false' }}"
                                 aria-controls="filterCollapse">
                                 <strong class="text-dark">Filter Tickets</strong>
-                                <span class="float-end">
+                                <span class="float-end bg-secondary" style="padding: 5px 10px; border-radius: 8px;">
                                     <i class="bi {{ (request('status') || request('by') || request('vertical') || request('networktype') || request('section') || request('date_from') || request('date_to')) ? 'bi-chevron-up' : 'bi-chevron-down' }}" id="filterChevron"></i>
                                 </span>
                             </div>

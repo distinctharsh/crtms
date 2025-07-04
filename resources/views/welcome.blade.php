@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'CRTS') }}</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -92,127 +93,146 @@
     </style>
     <!-- Stylish Search Ticket Modal CSS -->
     <style>
-    .stylish-modal {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(16px) saturate(180%);
-        border-radius: 24px;
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-        border: 1px solid rgba(255, 255, 255, 0.18);
-        padding: 2rem 1.5rem 1.5rem 1.5rem;
-        position: relative;
-    }
-    .search-icon-circle {
-        width: 56px;
-        height: 56px;
-        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
-        color: #fff;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 2rem;
-        margin: 0 auto;
-        box-shadow: 0 4px 16px rgba(13, 110, 253, 0.15);
-    }
-    .stylish-label {
-        font-weight: 600;
-        color: #0d6efd;
-        margin-bottom: 0.5rem;
-    }
-    .stylish-input-group .input-group {
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(13, 110, 253, 0.07);
-    }
-    .stylish-input-icon {
-        background: #f0f4fa;
-        border: none;
-        color: #0d6efd;
-        font-size: 1.2rem;
-    }
-    .stylish-input {
-        border: none;
-        background: #f8fafd;
-        font-size: 1.1rem;
-        padding: 0.75rem 1rem;
-        border-radius: 0 12px 12px 0;
-        transition: box-shadow 0.2s;
-    }
-    .stylish-input:focus {
-        box-shadow: 0 0 0 2px #0d6efd33;
-        outline: none;
-        background: #fff;
-    }
-    .stylish-btn {
-        background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
-        color: #fff;
-        font-weight: 600;
-        border: none;
-        border-radius: 12px;
-        padding: 0.75rem 0;
-        font-size: 1.1rem;
-        box-shadow: 0 2px 8px rgba(13, 110, 253, 0.10);
-        transition: background 0.2s, box-shadow 0.2s;
-    }
-    .stylish-btn:hover, .stylish-btn:focus {
-        background: linear-gradient(135deg, #0b5ed7 0%, #0a58ca 100%);
-        box-shadow: 0 4px 16px rgba(13, 110, 253, 0.15);
-        color: #fff;
-    }
-    .stylish-alert {
-        border-radius: 8px;
-        font-size: 0.98rem;
-        margin-bottom: 1rem;
-        padding: 0.5rem 1rem;
-        text-align: center;
-        background: #fff0f3;
-        color: #d63384;
-        border: 1px solid #f8d7da;
-    }
-    .custom-global-alert {
-        border-radius: 16px;
-        font-size: 1.08rem;
-        padding: 1rem 1.5rem;
-        box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
-        border: none;
-        opacity: 0.98;
-        animation: slideDown 0.7s cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    @keyframes slideDown {
-        0% { transform: translateY(-40px) scale(0.95); opacity: 0; }
-        100% { transform: translateY(0) scale(1); opacity: 0.98; }
-    }
+        .stylish-modal {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 24px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            padding: 2rem 1.5rem 1.5rem 1.5rem;
+            position: relative;
+        }
+
+        .search-icon-circle {
+            width: 56px;
+            height: 56px;
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto;
+            box-shadow: 0 4px 16px rgba(13, 110, 253, 0.15);
+        }
+
+        .stylish-label {
+            font-weight: 600;
+            color: #0d6efd;
+            margin-bottom: 0.5rem;
+        }
+
+        .stylish-input-group .input-group {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.07);
+        }
+
+        .stylish-input-icon {
+            background: #f0f4fa;
+            border: none;
+            color: #0d6efd;
+            font-size: 1.2rem;
+        }
+
+        .stylish-input {
+            border: none;
+            background: #f8fafd;
+            font-size: 1.1rem;
+            padding: 0.75rem 1rem;
+            border-radius: 0 12px 12px 0;
+            transition: box-shadow 0.2s;
+        }
+
+        .stylish-input:focus {
+            box-shadow: 0 0 0 2px #0d6efd33;
+            outline: none;
+            background: #fff;
+        }
+
+        .stylish-btn {
+            background: linear-gradient(135deg, #0d6efd 0%, #0a58ca 100%);
+            color: #fff;
+            font-weight: 600;
+            border: none;
+            border-radius: 12px;
+            padding: 0.75rem 0;
+            font-size: 1.1rem;
+            box-shadow: 0 2px 8px rgba(13, 110, 253, 0.10);
+            transition: background 0.2s, box-shadow 0.2s;
+        }
+
+        .stylish-btn:hover,
+        .stylish-btn:focus {
+            background: linear-gradient(135deg, #0b5ed7 0%, #0a58ca 100%);
+            box-shadow: 0 4px 16px rgba(13, 110, 253, 0.15);
+            color: #fff;
+        }
+
+        .stylish-alert {
+            border-radius: 8px;
+            font-size: 0.98rem;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            text-align: center;
+            background: #fff0f3;
+            color: #d63384;
+            border: 1px solid #f8d7da;
+        }
+
+        .custom-global-alert {
+            border-radius: 16px;
+            font-size: 1.08rem;
+            padding: 1rem 1.5rem;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+            border: none;
+            opacity: 0.98;
+            animation: slideDown 0.7s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        @keyframes slideDown {
+            0% {
+                transform: translateY(-40px) scale(0.95);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0) scale(1);
+                opacity: 0.98;
+            }
+        }
     </style>
 </head>
 
 <body>
     @if (session('success') || session('error') || session('warning') || session('info') || session('message') || $errors->any())
-        @php
-            // Priority: error > success > warning > info > message > errors bag
-            $type = session('error') ? 'danger'
-                : (session('success') ? 'success'
-                : (session('warning') ? 'warning'
-                : (session('info') ? 'info'
-                : (session('message') ? 'primary'
-                : ($errors->any() ? 'danger' : 'primary')))));
-            // Collect all messages
-            $messages = [];
-            if(session('error')) $messages[] = session('error');
-            if(session('success')) $messages[] = session('success');
-            if(session('warning')) $messages[] = session('warning');
-            if(session('info')) $messages[] = session('info');
-            if(session('message')) $messages[] = session('message');
-            // Laravel's withErrors() (can be MessageBag or array)
-            if($errors->any()) {
-                foreach($errors->all() as $err) $messages[] = $err;
-            }
-        @endphp
-        <div id="global-alert" class="alert alert-{{ $type }} custom-global-alert alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-4 shadow-lg" role="alert" style="z-index: 2000; min-width: 320px; max-width: 90vw;">
-            @foreach($messages as $msg)
-                <div class="fw-semibold">{{ $msg }}</div>
-            @endforeach
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
+    @php
+    // Priority: error > success > warning > info > message > errors bag
+    $type = session('error') ? 'danger'
+    : (session('success') ? 'success'
+    : (session('warning') ? 'warning'
+    : (session('info') ? 'info'
+    : (session('message') ? 'primary'
+    : ($errors->any() ? 'danger' : 'primary')))));
+    // Collect all messages
+    $messages = [];
+    if(session('error')) $messages[] = session('error');
+    if(session('success')) $messages[] = session('success');
+    if(session('warning')) $messages[] = session('warning');
+    if(session('info')) $messages[] = session('info');
+    if(session('message')) $messages[] = session('message');
+    // Laravel's withErrors() (can be MessageBag or array)
+    if($errors->any()) {
+    foreach($errors->all() as $err) $messages[] = $err;
+    }
+    @endphp
+    <div id="global-alert" class="alert alert-{{ $type }} custom-global-alert alert-dismissible fade show position-fixed top-0 start-50 translate-middle-x mt-4 shadow-lg" role="alert" style="z-index: 2000; min-width: 320px; max-width: 90vw;">
+        @foreach($messages as $msg)
+        <div class="fw-semibold">{{ $msg }}</div>
+        @endforeach
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
     @endif
     <!-- Navigation -->
     @include('layouts.navbar')

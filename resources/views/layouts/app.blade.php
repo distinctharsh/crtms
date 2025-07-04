@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Complaint Redressal Ticketing (CRT) System</title>
+    <link rel="icon" type="image/x-icon" href="{{ asset('images/favicon.ico') }}">
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
 
@@ -89,9 +91,9 @@
 
 
         div.dataTables_wrapper div.dataTables_paginate {
-        text-align: right !important;
-        float: right !important;
-    }
+            text-align: right !important;
+            float: right !important;
+        }
 
         #usersTable_filter {
             float: right;
@@ -103,6 +105,7 @@
             margin-bottom: 1rem !important;
             padding-bottom: 0 !important;
         }
+
         .filter-card .card-header {
             border-radius: 16px 16px 0 0;
             font-size: 1.1rem;
@@ -116,7 +119,7 @@
         }
 
         /* Reduce table cell padding */
-        .table > :not(caption) > * > * {
+        .table> :not(caption)>*>* {
             padding-top: 0.45rem;
             padding-bottom: 0.45rem;
         }
