@@ -13,7 +13,7 @@ class RoleStatusController extends Controller
         if (!auth()->user()->isManager() && !auth()->user()->isAdmin()) {
             abort(403);
         }
-        $user = auth()->user()->id;
+        $user = auth()->user();
         if (!in_array($user->role_id, [1, 2])) {
             abort(403);
         }
@@ -27,7 +27,7 @@ class RoleStatusController extends Controller
         if (!auth()->user()->isManager() && !auth()->user()->isAdmin()) {
             abort(403);
         }
-        $user = auth()->user()->id;
+        $user = auth()->user();
         if (!in_array($user->role_id, [1, 2])) {
             abort(403);
         }
