@@ -118,6 +118,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/role-status/{role}', [\App\Http\Controllers\RoleStatusController::class, 'update'])->name('admin.role-status.update');
     Route::get('/admin/status-transitions', [\App\Http\Controllers\StatusTransitionController::class, 'index'])->name('admin.status-transitions.index');
     Route::post('/admin/status-transitions', [\App\Http\Controllers\StatusTransitionController::class, 'update'])->name('admin.status-transitions.update');
+    Route::post('/admin/status-transitions/{id}/delete', [\App\Http\Controllers\StatusTransitionController::class, 'destroy'])->name('admin.status-transitions.destroy');
 });
 
 require __DIR__ . '/auth.php';

@@ -47,4 +47,11 @@ class StatusTransitionController extends Controller
         }
         return redirect()->route('admin.status-transitions.index')->with('success', 'Transitions updated!');
     }
+
+    public function destroy($id)
+    {
+        $transition = StatusTransition::findOrFail($id);
+        $transition->delete();
+        return redirect()->route('admin.status-transitions.index')->with('success', 'Transition deleted successfully!');
+    }
 } 

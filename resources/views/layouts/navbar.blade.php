@@ -2,7 +2,11 @@
   <div class="container">
     <div class="d-flex align-items-center" style="height: 80px;">
       <img src="{{ asset('images/emblem-dark.png') }}" alt="Emblem" class="h-100" style="object-fit: contain;">
-      <img src="{{ asset('images/nic-main.png') }}" alt="NIC Logo" class="h-100 ms-2" style="object-fit: contain;">
+      <!-- <img src="{{ asset('images/nic-main.png') }}" alt="NIC Logo" class="h-100 ms-2" style="object-fit: contain;"> -->
+    <div class="d-flex flex-column " style="margin-left: 20px;">
+      <h4>Cabinet Secretariat</h4>
+      <h5>Government of India</h5>
+    </div>
     </div>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
