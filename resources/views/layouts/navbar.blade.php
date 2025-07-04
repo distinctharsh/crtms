@@ -2,7 +2,10 @@
   <div class="container">
     <div class="d-flex align-items-center" style="height: 80px;">
       <img src="{{ asset('images/emblem-dark.png') }}" alt="Emblem" class="h-100" style="object-fit: contain;">
-      <img src="{{ asset('images/nic-main.png') }}" alt="NIC Logo" class="h-100 ms-2" style="object-fit: contain;">
+      <div class="d-flex flex-column ms-3">
+        <span class="bold-font">Cabinet Secretariat</span>
+        <strong lang="hi" class="bold-font">Government of India</strong>
+      </div>
     </div>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
@@ -13,22 +16,22 @@
       <ul class="navbar-nav ms-auto">
         @auth
         <li class="nav-item mt-1">
-  <a class="nav-link {{ request()->routeIs('dashboard') ? 'active fw-bold text-primary' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
-</li>
+          <a class="nav-link {{ request()->routeIs('dashboard') ? 'active fw-bold text-primary' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
+        </li>
 
-<li class="nav-item mt-1">
-  <a class="nav-link {{ request()->routeIs('complaints.index') ? 'active fw-bold text-primary' : '' }}" href="{{ route('complaints.index') }}">Tickets</a>
-</li>
+        <li class="nav-item mt-1">
+          <a class="nav-link {{ request()->routeIs('complaints.index') ? 'active fw-bold text-primary' : '' }}" href="{{ route('complaints.index') }}">Tickets</a>
+        </li>
 
 
-@if(auth()->user()->isManager())
-<li class="nav-item mt-1">
-  <a class="nav-link {{ request()->routeIs('users.index') ? 'active fw-bold text-primary' : '' }}" href="{{ route('users.index') }}">Users</a>
-</li>
-<li class="nav-item mt-1">
-  <a class="nav-link {{ request()->routeIs('masters.index') ? 'active fw-bold text-primary' : '' }}" href="{{ route('masters.index') }}">Masters</a>
-</li>
-@endif
+        @if(auth()->user()->isManager())
+        <li class="nav-item mt-1">
+          <a class="nav-link {{ request()->routeIs('users.index') ? 'active fw-bold text-primary' : '' }}" href="{{ route('users.index') }}">Users</a>
+        </li>
+        <li class="nav-item mt-1">
+          <a class="nav-link {{ request()->routeIs('masters.index') ? 'active fw-bold text-primary' : '' }}" href="{{ route('masters.index') }}">Masters</a>
+        </li>
+        @endif
 
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
@@ -61,7 +64,7 @@
           </ul>
         </li>
 
-      
+
         @endauth
       </ul>
     </div>
