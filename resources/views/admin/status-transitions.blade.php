@@ -60,6 +60,44 @@
         </div>
     </div>
     <hr>
+    <div class="alert alert-info mb-4">
+        <h5 class="mb-2"><i class="bi bi-info-circle"></i> Button Visibility Rules</h5>
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle text-center bg-white">
+                <thead class="table-light">
+                    <tr>
+                        <th>Status</th>
+                        <th>Manager</th>
+                        <th>VM</th>
+                        <th>NFO</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="badge bg-secondary">Unassigned</span></td>
+                        <td><span class="badge bg-primary">Assign</span></td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-info">Assigned to VM</span></td>
+                        <td>-</td>
+                        <td><span class="badge bg-primary">Reassign</span> <span class="badge bg-warning text-dark">Revert to Manager</span></td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><span class="badge bg-info">Assigned to NFO</span></td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td><span class="badge bg-warning text-dark">Revert to VM</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="small text-muted">
+            <strong>Note:</strong> Button visibility also depends on allowed status transitions and assignment. If a transition is not allowed in the workflow, the button will not appear even if the above rule matches.
+        </div>
+    </div>
     <h4>Existing Transitions</h4>
     @php
         // Get all unique from-to status pairs

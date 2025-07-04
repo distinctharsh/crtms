@@ -269,10 +269,10 @@ $breadcrumbs = [
                     <div class="comment mb-3 p-2 border rounded bg-light">
                         <div class="d-flex align-items-center mb-1">
                             <div class="avatar bg-secondary text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 32px; height: 32px; font-size: 1rem;">
-                                {{ substr($comment->user->full_name, 0, 1) }}
+                                {{ $comment->user ? substr($comment->user->full_name, 0, 1) : '?' }}
                             </div>
                             <div class="ms-2">
-                                <strong>{{ $comment->user->full_name }}</strong>
+                                <strong>{{ $comment->user ? $comment->user->full_name : 'Unknown User' }}</strong>
                                 <span class="text-muted small">&nbsp;{{ $comment->created_at->format('M d, Y H:i') }}</span>
                             </div>
                         </div>

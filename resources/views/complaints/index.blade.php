@@ -158,145 +158,7 @@ $breadcrumbs = [
                                     <td>
                                         <div class="btn-group">
                                             <a href="{{ route('complaints.show', $complaint) }}" class="btn btn-sm btn-info me-1">View</a>
-                                            @auth
-                                            @if(auth()->user()->isManager())
-                                            @if($complaint->status->name != 'completed' && $complaint->status->name != 'closed')
-                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#assignModal{{ $complaint->id }}">
-                                                @if($complaint->assigned_to)
-                                                Reassign
-                                                @else
-                                                Assign
-                                                @endif
-                                            </button>
-                                            @endif
-                                            @elseif(auth()->user()->isVM())
-                                            @if(($complaint->isUnassigned() || $complaint->assigned_to === auth()->user()->id) && $complaint->status->name != 'completed' && $complaint->status->name != 'closed')
-                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#assignModal{{ $complaint->id }}">
-                                                Assign
-                                            </button>
-                                            @if($complaint->assigned_to === auth()->user()->id && $complaint->status->name != 'completed' && $complaint->status->name != 'closed')
-                                            <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#revertModal{{ $complaint->id }}">
-                                                Revert
-                                            </button>
-                                            @endif
-                                            @endif
-                                            @elseif(auth()->user()->isNFO())
-                                          
-                                            @if($complaint->assigned_to === auth()->user()->id && !$complaint->isCompleted() && !$complaint->isClosed())
-                                            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#assignModal{{ $complaint->id }}">
-                                                Reassign
-                                            </button>
-                                            @endif
-                                            @endif
-                                            @endauth
-                                        </div>
-                                        <!-- Assign Modal -->
-                                        <div class="modal fade" id="assignModal{{ $complaint->id }}" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <form action="{{ route('complaints.assign', $complaint) }}" method="POST">
-                                                        @csrf
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Assign Complaint</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="mb-3">
-                                                                <label for="assigned_to" class="form-label">Assign To</label>
-                                                                <select class="form-select tom-select" name="assigned_to" required>
-                                                                    <option value="">Select User</option>
-                                                                    @foreach($complaint->assignableUsers as $user)
-                                                                    <option value="{{ $user->id }}">{{ $user->full_name }} ({{ strtoupper($user->role->name) }})</option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="description" class="form-label">Remarks</label>
-                                                                <textarea class="form-control" name="description" rows="3" required></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                            <button type="submit" class="btn btn-primary">Assign</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Resolve Modal -->
-                                        <div class="modal fade" id="resolveModal{{ $complaint->id }}" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <form action="{{ route('complaints.resolve', $complaint) }}" method="POST">
-                                                        @csrf
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Resolve Ticket</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="form-check mb-3">
-                                                                <input class="form-check-input" type="checkbox" value="1" id="markClosed{{ $complaint->id }}" name="mark_closed">
-                                                                <label class="form-check-label" for="markClosed{{ $complaint->id }}">
-                                                                    Mark as Closed
-                                                                </label>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="status_id" class="form-label">Status *</label>
-                                                                <select class="form-select tom-select" id="statusSelect{{ $complaint->id }}" name="status_id" required>
-                                                                    @foreach($allowedStatuses as $status)
-                                                                    <option value="{{ $status->id }}" {{ old('status_id', $complaint->status_id) == $status->id ? 'selected' : '' }}>
-                                                                        {{ $status->display_name }}
-                                                                    </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="description" class="form-label">Remarks / Solution *</label>
-                                                                <textarea class="form-control" name="description" rows="3" required></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                            <button type="submit" class="btn btn-success">Resolve</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- Revert Modal -->
-                                        <div class="modal fade" id="revertModal{{ $complaint->id }}" tabindex="-1">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <form action="{{ route('complaints.revert', $complaint) }}" method="POST">
-                                                        @csrf
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title">Revert to Manager</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                                                        </div>
-                                                        <div class="modal-body">
-                                                            <div class="mb-3">
-                                                                <label for="assigned_to" class="form-label">Revert to Manager</label>
-                                                                <select class="form-select tom-select" name="assigned_to" required>
-                                                                    <option value="">Select Manager</option>
-                                                                    @foreach($managers as $manager)
-                                                                    <option value="{{ $manager->id }}" @if($manager->id == $complaint->assigned_by) selected @endif>
-                                                                        {{ $manager->full_name }}@if($manager->id == $complaint->assigned_by) (Original Assigner)@endif
-                                                                    </option>
-                                                                    @endforeach
-                                                                </select>
-                                                            </div>
-                                                            <div class="mb-3">
-                                                                <label for="description" class="form-label">Reason for Reverting</label>
-                                                                <textarea class="form-control" name="description" rows="3" required></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                                                            <button type="submit" class="btn btn-warning">Revert</button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
+                                            @include('complaints.partials.action-buttons', ['complaint' => $complaint])
                                         </div>
                                     </td>
                                 </tr>
@@ -309,6 +171,13 @@ $breadcrumbs = [
         </div>
     </div>
 </div>
+
+<!-- Render all modals after the table for DataTables compatibility -->
+@foreach($complaints as $complaint)
+    @include('complaints.modals.assign', ['complaint' => $complaint])
+    @include('complaints.modals.revert', ['complaint' => $complaint])
+    @include('complaints.modals.resolve', ['complaint' => $complaint])
+@endforeach
 @endsection
 
 @push('scripts')

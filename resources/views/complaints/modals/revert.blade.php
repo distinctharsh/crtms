@@ -1,4 +1,4 @@
-<div class="modal fade" id="revertModal" tabindex="-1">
+<div class="modal fade" id="revertModal{{ $complaint->id }}" tabindex="-1">
   <div class="modal-dialog">
     <div class="modal-content">
       <form action="{{ route('complaints.revert', $complaint) }}" method="POST">

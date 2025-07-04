@@ -165,4 +165,12 @@ class Complaint extends Model
 
         return in_array($user->id, $relatedUserIds);
     }
+
+    public function canTransitionTo($toStatusId, $roleId)
+    {
+        return \App\Models\StatusTransition::where('from_status_id', $this->status_id)
+            ->where('to_status_id', $toStatusId)
+            ->where('role_id', $roleId)
+            ->exists();
+    }
 }

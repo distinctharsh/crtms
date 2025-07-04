@@ -12,6 +12,9 @@
             <label for="assigned_to{{ $complaint->id }}" class="form-label">Assign To</label>
             <select class="form-select" name="assigned_to" id="assigned_to{{ $complaint->id }}" required>
               <option value="">Select User</option>
+              @foreach($complaint->assignableUsers as $user)
+                <option value="{{ $user->id }}">{{ $user->full_name }} ({{ strtoupper($user->role->name) }})</option>
+              @endforeach
             </select>
           </div>
           <div class="mb-3">

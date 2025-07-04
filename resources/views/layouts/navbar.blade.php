@@ -43,6 +43,12 @@
     </li>
 @endif
 
+@if(auth()->check() && is_object(auth()->user()) && auth()->user()->isManager())
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.button-visibility.index') }}">Button Visibility Master</a>
+    </li>
+@endif
+
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
             <div class="rounded-circle bg-primary text-white d-flex justify-content-center align-items-center" style="width: 36px; height: 36px; font-size: 1rem;">

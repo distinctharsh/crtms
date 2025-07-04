@@ -9,6 +9,7 @@ use App\Http\Controllers\MastersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleStatusController;
 use App\Http\Controllers\StatusTransitionController;
+use App\Http\Controllers\ButtonVisibilityController;
 
 
 
@@ -119,6 +120,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/status-transitions', [\App\Http\Controllers\StatusTransitionController::class, 'index'])->name('admin.status-transitions.index');
     Route::post('/admin/status-transitions', [\App\Http\Controllers\StatusTransitionController::class, 'update'])->name('admin.status-transitions.update');
     Route::post('/admin/status-transitions/{id}/delete', [\App\Http\Controllers\StatusTransitionController::class, 'destroy'])->name('admin.status-transitions.destroy');
+    Route::get('/admin/button-visibility', [\App\Http\Controllers\ButtonVisibilityController::class, 'index'])->name('admin.button-visibility.index');
+    Route::post('/admin/button-visibility', [\App\Http\Controllers\ButtonVisibilityController::class, 'store'])->name('admin.button-visibility.store');
+    Route::post('/admin/button-visibility/{rule}/delete', [\App\Http\Controllers\ButtonVisibilityController::class, 'destroy'])->name('admin.button-visibility.destroy');
 });
 
 require __DIR__ . '/auth.php';
